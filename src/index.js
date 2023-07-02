@@ -5,11 +5,11 @@ const apiRoutes = require("./routes/index");
 const db = require("./models");
 const app = express();
 
-const prepareAndStartServer = () => {
+const prepareAndStartServer = async () => {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: true }));
 
-  app.use("/api", apiRoutes);
+  app.use("/bookingService/api", apiRoutes);
 
   app.listen(PORT, () => {
     if (process.env.DB_SYNC) {

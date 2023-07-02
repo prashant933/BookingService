@@ -2,6 +2,8 @@ const { BookingRepository } = require("../repository/index");
 const { FLIGHT_SERVICE_PATH } = require("../config/serverConfig");
 const axios = require("axios");
 const { ServiceError } = require("../utils/errors");
+const { createChannel, publishMessage } = require("../utils/messageQueue");
+const { REMINDER_BINDING_KEY } = require("../config/serverConfig");
 
 class BookingService {
   constructor() {
@@ -29,6 +31,14 @@ class BookingService {
       booking = await this.bookingRepository.update(booking.id, {
         status: "Booked",
       });
+      const channel = await createChannel();
+      let message = {
+        subject: "Booking confirmation",
+        content: "Flight booked successfully",
+        recepientEmail: "rishushukla30@gmail.com",
+        notificationTime: "2023-06-29T17:18:39",
+      };
+      publishMessage(channel, REMINDER_BINDING_KEY, JSON.stringify(message));
       return booking;
     } catch (error) {
       if (error.name == "ServiceError" || error.name == "ValidationError") {
