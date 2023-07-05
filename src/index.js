@@ -11,6 +11,12 @@ const prepareAndStartServer = async () => {
 
   app.use("/bookingService/api", apiRoutes);
 
+  app.get("/bookingService/home", (req, res) => {
+    return res.json({
+      message: "Hello from booking service",
+    });
+  });
+
   app.listen(PORT, () => {
     if (process.env.DB_SYNC) {
       db.sequelize.sync({ alter: true });

@@ -13,7 +13,7 @@ class BookingService {
   async createBooking(data) {
     try {
       const flightId = data.flightId;
-      const flightRequestUrl = `${FLIGHT_SERVICE_PATH}/api/v1/flights/${flightId}`;
+      const flightRequestUrl = `${FLIGHT_SERVICE_PATH}/flightService/api/v1/flights/${flightId}`;
       const response = await axios.get(flightRequestUrl);
       const flightData = response.data.data;
       if (data.numberOfSeats > flightData.totalSeats) {
