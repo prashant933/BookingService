@@ -19,6 +19,7 @@ class BookingController {
 
   async create(req, res) {
     try {
+      req.body.userEmail = req.headers["user-email"];
       const response = await bookingService.createBooking(req.body);
       return res.status(StatusCodes.OK).json({
         data: response,

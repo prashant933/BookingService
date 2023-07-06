@@ -31,12 +31,13 @@ class BookingService {
       booking = await this.bookingRepository.update(booking.id, {
         status: "Booked",
       });
+      const userEmail = data.userEmail;
       const channel = await createChannel();
       let message = {
         subject: "Booking confirmation",
         content: "Flight booked successfully",
-        recepientEmail: "rishushukla30@gmail.com",
-        notificationTime: "2023-06-29T17:18:39",
+        recepientEmail: userEmail,
+        notificationTime: new Date(),
       };
       publishMessage(channel, REMINDER_BINDING_KEY, JSON.stringify(message));
       return booking;
